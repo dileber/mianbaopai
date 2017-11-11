@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by shidawei on 16/7/17.
@@ -94,6 +95,21 @@ public class UJson {
             }.getType());
         }
         return list;
+    }
+
+    /**
+     * 转成map的
+     *
+     * @param gsonString
+     * @return
+     */
+    public static <T> Map<String, T> toMaps(String gsonString,Class<T> cls) {
+        Map<String, T> map = null;
+        if (gson != null) {
+            map = gson.fromJson(gsonString, new TypeToken<Map<String, T>>() {
+            }.getType());
+        }
+        return map;
     }
 
 }

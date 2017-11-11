@@ -36,11 +36,12 @@ public class UQiNiu {
      * @param savefile
      * @param token
      */
-    private void upload(byte[] bytes,String savefile,String token) throws QiniuException {
+    private String upload(byte[] bytes,String savefile,String token) throws QiniuException {
         UploadManager uploadManager = new UploadManager();
         Response res = uploadManager.put(bytes, savefile,token);
         //打印返回的信息
         ULog.d("sssss", res.bodyString());
+        return res.bodyString();
     }
 
     /**
@@ -49,12 +50,12 @@ public class UQiNiu {
      * @param savefile 存储文件名
      * @param replace 覆盖
      */
-    public void uploadImage( MultipartFile file,String savefile,boolean replace) throws IOException {
+    public String uploadImage( MultipartFile file,String savefile,boolean replace) throws IOException {
         if (file == null || file.isEmpty()) {
             throw new IOException("上传图片不能为空");
         }
         if(replace){
-            upload(file.getBytes(),savefile,auth.uploadToken(bucketname, savefile));
+            return upload(file.getBytes(),savefile,auth.uploadToken(bucketname, savefile));
         }else{
             String pic_type = file.getContentType();
             if(pic_type.equals("image/jpeg")){
@@ -68,7 +69,7 @@ public class UQiNiu {
             } else if(pic_type.equals("image/png")){
                 savefile = savefile.concat(".gif");
             } else savefile = savefile.concat(".jpg");
-            upload(file.getBytes(),savefile,auth.uploadToken(bucketname));
+            return upload(file.getBytes(),savefile,auth.uploadToken(bucketname));
         }
     }
 

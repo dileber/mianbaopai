@@ -5,6 +5,8 @@ package com.mianbaopailib;
  */
 public class AppConstant {
 
+    public static final String SESSION_MUTEX = "session_mutex_lock";
+
     private boolean info;
 
     private String name;
